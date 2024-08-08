@@ -3,17 +3,19 @@ package funcs
 import (
 	"html/template"
 	"net/http"
-	"strings"
 )
 
 func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
-	asciiArt := r.URL.Query().Get("art")
-	if asciiArt == "" {
-		http.Error(w, "No ASCII art found", http.StatusNotFound)
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	asciiArt = strings.ReplaceAll(asciiArt, "%0A", "\n")
+	asciiArt := r.FormValue("art")
+	if asciiArt == "" {
+		http.Error(w, "No ASCII art found", http.StatusBadRequest)
+		return
+	}
 
 	data := map[string]string{
 		"ASCIIArt": asciiArt,

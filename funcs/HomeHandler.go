@@ -7,6 +7,10 @@ import (
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		http.Error(w, "404 Not Found", http.StatusNotFound)
+		return
+	}
 	if r.Method == http.MethodPost {
 		err := r.ParseForm()
 		if err != nil {
