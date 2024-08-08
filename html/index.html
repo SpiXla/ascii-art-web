@@ -4,30 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASCII Art Generator</title>
+    <style>
+        h1 {
+            font-family: sans-serif;
+            text-align: center;
+        }
+        body {
+            background-color: linen;
+        }
+        .form-floating {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .banners {
+            font-family: sans-serif;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .submit {
+            text-align: center;
+            margin-top: 20px;
+           
+        }
+    </style>
 </head>
 <body>
     <form action="/" method="POST">
+        <h1>Ascii Art Web</h1>
         <div class="form-floating">
             <textarea name="text" placeholder="Enter your text here" style="height: 200px"></textarea>
-            <label for="floatingTextarea2"></label>
         </div>
-        <div>
-            <label>Choose a banner:</label>
+        <div class="banners">
+            <label for="banners">Choose a banner:</label>
             <select name="banner" id="banners">
                 <option value="standard">Standard</option>
                 <option value="shadow">Shadow</option>
                 <option value="thinkertoy">Thinkertoy</option>
             </select>
         </div>
-        <div>
+        <div class="submit">
             <button type="submit">Submit</button>
         </div>
     </form>
-    {{if .ASCIIArt}}
-    <div>
-        <h2>Generated ASCII Art:</h2>
-        <pre>{{.ASCIIArt}}</pre>
-    </div>
-    {{end}}
 </body>
 </html>

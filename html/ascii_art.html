@@ -4,10 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASCII Art Result</title>
+    <style>
+        .button {
+            text-decoration: none;
+            width: 120px;
+            height: 40px;
+            background-color: #000000;
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin: auto;
+            font-size: 16px;
+            font-family: "Inter", sans-serif;
+            font-weight: bold;
+            color: #FFFFFF;
+            text-align: center;
+            float: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .button:hover {
+            background-color: #FFFFFF;
+            color: #000000;
+         }
+        h1 {
+            font-family: sans-serif;
+            margin-top: 40px;
+            text-align: center;
+        }
+        body {
+            background-color: linen;
+        }
+    </style>
 </head>
 <body>
     <h1>Generated ASCII Art</h1>
     <pre>{{.ASCIIArt}}</pre>
-    <a href="/">Go back</a>
+    <a class="button" href="/">Go back</a>
 </body>
 </html>
