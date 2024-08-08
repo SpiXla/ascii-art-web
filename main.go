@@ -9,7 +9,7 @@ import (
 func main() {
 	http.HandleFunc("/", funcs.HomeHandler)
 	http.HandleFunc("/ascii-art", funcs.AsciiArtHandler)
-	//  http.HandleFunc("/*", NotFoundHandler)
+	// http.HandleFunc("/*", NotFoundHandler)
 	fmt.Println("Your website is running at: http://localhost:8080")
 	http.ListenAndServe(":8080", nil)
 }

@@ -3,7 +3,7 @@ package funcs
 import (
 	"html/template"
 	"net/http"
-	"strings"
+	"net/url"
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
@@ -11,6 +11,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 Not Found", http.StatusNotFound)
 		return
 	}
+
 	if r.Method == http.MethodPost {
 		err := r.ParseForm()
 		if err != nil {
@@ -20,26 +21,33 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		text := r.FormValue("text")
 		bannerName := r.FormValue("banner")
 
+		if bannerName != "standard" && bannerName != "shadow" && bannerName != "thinkertoy" || len(text) > 1000 {
+			http.Error(w, "Bad request", http.StatusNotFound)
+			return
+		}
+
 		banner, err := GetBanner(bannerName)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			http.Error(w, "Bad request", http.StatusInternalServerError)
 			return
 		}
 
 		asciiArt := GenerateASCIIArt(text, banner)
 
-		// Redirect with ASCII art as a query parameter
-		http.Redirect(w, r, "/ascii-art?art="+strings.ReplaceAll(asciiArt, "\n", "%0A"), http.StatusSeeOther)
-	} else {
-		tmpl, err := template.ParseFiles("html/index.html")
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
+		// Safely encode ASCII art for URL query
+		encodedArt := url.QueryEscape(asciiArt)
+		http.Redirect(w, r, "/ascii-art?art="+encodedArt, http.StatusSeeOther)
+		return
+	}
 
-		err = tmpl.Execute(w, nil)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
+	tmpl, err := template.ParseFiles("html/index.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
