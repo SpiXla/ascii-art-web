@@ -14,6 +14,7 @@ func GetBanner(bannerName string) ([]string, error) {
 
 	// Split banner data into lines
 	banner := strings.Split(string(bannerData), "\n")
+	
 
 	return banner, nil
 }

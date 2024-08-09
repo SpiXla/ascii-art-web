@@ -7,9 +7,10 @@ import (
 )
 
 func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
-	asciiArt := r.URL.Query().Get("art")
+	asciiArt := r.FormValue("art")
+	// asciiArt := r.URL.Query().Get("art")
 	if asciiArt == "" {
-		http.Error(w, "No ASCII art found", http.StatusNotFound)
+		http.Error(w, "Not Found", http.StatusNotFound)
 		return
 	}
 

@@ -16,6 +16,11 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		text := r.FormValue("text")
 		bannerName := r.FormValue("banner")
 
+		if len(text) > 100 || text == "" || (bannerName != "standard" && bannerName != "shadow" && bannerName != "thinkertoy") {
+			http.Error(w, "Bad request", http.StatusBadRequest)
+			return
+		}
+
 		banner, err := GetBanner(bannerName)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
