@@ -3,7 +3,6 @@ package funcs
 import (
 	"html/template"
 	"net/http"
-	"strings"
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
@@ -13,24 +12,8 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		text := r.FormValue("text")
-		bannerName := r.FormValue("banner")
-
-		if len(text) > 100 || text == "" || (bannerName != "standard" && bannerName != "shadow" && bannerName != "thinkertoy") {
-			http.Error(w, "Bad request", http.StatusBadRequest)
-			return
-		}
-
-		banner, err := GetBanner(bannerName)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		asciiArt := GenerateASCIIArt(text, banner)
-
 		// Redirect with ASCII art as a query parameter
-		http.Redirect(w, r, "/ascii-art?art="+strings.ReplaceAll(asciiArt, "\n", "%0A"), http.StatusSeeOther)
+		// http.Redirect(w, r, "/ascii-art?art="+strings.ReplaceAll(asciiArt, "\n", "%0A"), http.StatusSeeOther)
 	} else {
 		tmpl, err := template.ParseFiles("html/index.html")
 		if err != nil {

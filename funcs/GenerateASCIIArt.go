@@ -1,16 +1,18 @@
 package funcs
 
-import "strings"
+import (
+	"strings"
+)
 
 func GenerateASCIIArt(text string, banner []string) string {
-	var result strings.Builder
+	var result string
 	lines := strings.Split(text, "\n")
-
 	for _, line := range lines {
 		if line == "" {
-			result.WriteString("\n")
+			result += "\n"
 			continue
 		}
+		// Iterate over each row of the ASCII art (0 to 7, for the 8 rows)
 		for i := 0; i < 8; i++ {
 			for _, r := range line {
 				// Ensure the character is within the valid ASCII range
@@ -19,10 +21,10 @@ func GenerateASCIIArt(text string, banner []string) string {
 					continue
 				}
 				index := 9*(int(r)-32) + i + 1
-				result.WriteString(banner[index])
+				result += banner[index]
 			}
-			result.WriteString("\n")
+			result += "\n" // Add newline after finishing the current row of the line
 		}
 	}
-	return result.String()
+	return result
 }
